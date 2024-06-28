@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import { useAtom } from 'jotai';
 import { visitedCitiesAtom } from '../atoms/jotai'; // Adjust the path if necessary
@@ -9,9 +10,18 @@ import { visitedCitiesAtom } from '../atoms/jotai'; // Adjust the path if necess
 export default function NavigationBar() {
   const [searchId, setSearchId] = useState('');
   const [visitedCities] = useAtom(visitedCitiesAtom);
+  const router = useRouter(); // Using Next.js router for programmatic navigation
 
   const handleInputChange = (e) => {
     setSearchId(e.target.value);
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    if (searchId) {
+      router.push(`/city/${searchId}`);
+      setSearchId(''); // Optionally clear the input after searching
+    }
   };
 
   return (
@@ -25,7 +35,7 @@ export default function NavigationBar() {
             {visitedCities.length > 0 ? (
               visitedCities.map((city, index) => (
                 <Link href={`/city/${city.id}`} passHref key={index}>
-                  <NavDropdown.Item>City: {city.id}</NavDropdown.Item>
+                  <NavDropdown.Item>City: {city.name || city.id}</NavDropdown.Item>
                 </Link>
               ))
             ) : (
@@ -33,7 +43,7 @@ export default function NavigationBar() {
             )}
           </NavDropdown>
         </Nav>
-        <Form className="d-flex ms-auto">
+        <Form className="d-flex ms-auto" onSubmit={handleFormSubmit}>
           <FormControl
             type="text"
             placeholder="City ID"
@@ -41,9 +51,7 @@ export default function NavigationBar() {
             value={searchId}
             onChange={handleInputChange}
           />
-          <Link href={`/city/${searchId}`} passHref>
-            <Button variant="outline-info">Search</Button>
-          </Link>
+          <Button variant="outline-info" type="submit">Search</Button>
         </Form>
       </Navbar.Collapse>
     </Navbar>
