@@ -42,6 +42,7 @@ export default function NavigationBar() {
             type="text"
             placeholder="City ID"
             className="me-2"
+            value={searchId}
             onChange={handleInputChange}
           />
           <Link href={`/city/${searchId}`} passHref>

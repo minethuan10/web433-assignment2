@@ -1,4 +1,10 @@
 
+import axios from 'axios';
+
+export const fetchWeatherById = async (id) => {
+  const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?id=appid=29d80837e8d1e5fe92b9b8064c260ae3&cnt=6`);
+  return response.data;
+};
 
 export const fetchWeatherByCoords = async (lat, lon) => {
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=29d80837e8d1e5fe92b9b8064c260ae3&cnt=6`);
@@ -14,11 +20,7 @@ export const fetchWeatherByCoords = async (lat, lon) => {
     return data.list;
   };
   
-  export const fetchWeatherById = async (id) => {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?id=${id}&appid=29d80837e8d1e5fe92b9b8064c260ae3&cnt=6`);
-    if (!response.ok) throw new Error('Failed to fetch weather data.');
-    return response.json();
-  };
+  
   
   export const fetchWeatherByCityId = async (id) => {
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?id=${id}&appid=29d80837e8d1e5fe92b9b8064c260ae3&cnt=6`);
