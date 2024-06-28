@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { fetchWeatherById } from '../../api/weatherAPI; // Adjust the path as necessary
-import WeatherList from '../WeatherList';
+import { fetchWeatherById } from '../api/weatherAPI'; // Adjust the path as necessary
+import WeatherList from '../components/WeatherList'; // Adjust the path as necessary
 
 const CityById = () => {
   const router = useRouter();
