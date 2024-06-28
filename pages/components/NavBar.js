@@ -15,16 +15,12 @@ export default function NavigationBar() {
   };
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
-      <Link href="/" passHref>
-        <span>Weather App</span>
-      </Link>
-      <Navbar.Toggle aria-controls="navbar-content" />
-      <Navbar.Collapse id="navbar-content">
+    <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar.Brand href="/">Weather App by Thuan</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
-          <Link href="/" passHref>
-            <span>Home</span>
-          </Link>
+        <Nav.Link href="/">Home</Nav.Link>
           <NavDropdown title="Previously Viewed" id="basic-nav-dropdown">
             {visitedCities.length > 0 ? (
               visitedCities.map((city, index) => (
