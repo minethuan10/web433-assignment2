@@ -1,4 +1,5 @@
+// atoms/jotai.js
+
 import { atom } from 'jotai';
 
-// Atom for tracking visited cities
 export const visitedCitiesAtom = atom([]);

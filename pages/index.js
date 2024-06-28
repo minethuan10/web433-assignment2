@@ -8,7 +8,7 @@ import { fetchWeatherByCoords } from './api/weatherAPI';
 const Home = () => {
   const [localWeather, setLocalWeather] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
-  const [, setVisitedCities] = useAtom(visitedCitiesAtom);
+  const [visitedCities, setVisitedCities] = useAtom(visitedCitiesAtom); // Use and set visitedCities atom
   const [error, setError] = useState('');
   const [localWeatherLoaded, setLocalWeatherLoaded] = useState(false);
 
@@ -19,7 +19,7 @@ const Home = () => {
   const getLocalWeather = async (latitude, longitude) => {
     try {
       const data = await fetchWeatherByCoords(latitude, longitude);
-      if (!localWeather) { // Check if local weather has already been set
+      if (!localWeather) {
         setLocalWeather(data);
         setLocalWeatherLoaded(true);
       }
