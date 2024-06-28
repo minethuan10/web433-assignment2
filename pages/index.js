@@ -1,18 +1,16 @@
-// pages/index.js
-
-
 import React, { useEffect, useState } from 'react';
 import Search from './components/Search';
 import WeatherList from './components/WeatherList';
 import { useAtom } from 'jotai';
-import { visitedCitiesAtom } from './atoms/jotai'; // Adjust the path as necessary
-import { fetchWeatherByCoords } from './api/weatherAPI'; // Adjust the path as necessary
+import { visitedCitiesAtom } from './atoms/jotai';
+import { fetchWeatherByCoords } from './api/weatherAPI';
 
 const Home = () => {
   const [localWeather, setLocalWeather] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
   const [, setVisitedCities] = useAtom(visitedCitiesAtom);
   const [error, setError] = useState('');
+  const [localWeatherLoaded, setLocalWeatherLoaded] = useState(false);
 
   const handleSearch = (data) => {
     setSearchResults(data);
@@ -21,9 +19,12 @@ const Home = () => {
   const getLocalWeather = async (latitude, longitude) => {
     try {
       const data = await fetchWeatherByCoords(latitude, longitude);
-      setLocalWeather(data);
-      setVisitedCities(prev => {
-        const cityNames = new Set(prev.map(city => city.name.toLowerCase()));
+      if (!localWeather) { // Check if local weather has already been set
+        setLocalWeather(data);
+        setLocalWeatherLoaded(true);
+      }
+      setVisitedCities((prev) => {
+        const cityNames = new Set(prev.map((city) => city.name.toLowerCase()));
         if (!cityNames.has(data.name.toLowerCase())) {
           return [...prev, data];
         }
@@ -58,16 +59,10 @@ const Home = () => {
       <h1 className="text-center">Weather Search</h1>
       {error && <p className="text-danger text-center">{error}</p>}
       <Search onSearch={handleSearch} />
-      {searchResults ? (
-        <WeatherList weatherData={searchResults} />
-      ) : (
-        localWeather && <WeatherList weatherData={[localWeather]} />
-      )}
+      {/* Render search results if available */}
       
     </div>
   );
 };
-
-
 
 export default Home;
